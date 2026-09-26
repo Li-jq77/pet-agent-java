@@ -10,7 +10,7 @@ WorkingDirectory=/opt/pet-agent-java
 EnvironmentFile=/opt/pet-agent-java/.env
 Environment=APP_PORT=8001
 Environment=APP_CONTEXT_PATH=/pet-agent-java
-ExecStart=/usr/bin/java -Xms256m -Xmx512m -jar /opt/pet-agent-java/pet-agent-java-1.0.0.jar
+ExecStart=/usr/bin/java -Xms128m -Xmx384m -XX:MaxMetaspaceSize=192m -jar /opt/pet-agent-java/pet-agent-java-1.0.0.jar
 Restart=always
 RestartSec=5
 SuccessExitStatus=143

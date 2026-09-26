@@ -45,10 +45,20 @@ Check locally:
 curl -I http://127.0.0.1:8001/pet-agent-java/
 ```
 
+The service limits Java heap usage to 128-384 MB and metaspace to 192 MB so it
+can coexist with Django, Gunicorn, MySQL and Nginx on a small cloud server.
+
 ## 4. Add the Nginx location
 
 Copy the contents of `nginx-pet-agent-java.conf` into the existing
 `lijunqi.cc` server block, before the general Django location.
+
+If that server block still uses the IP only, update it so the domain is matched
+explicitly:
+
+```nginx
+server_name lijunqi.cc www.lijunqi.cc 8.217.93.123;
+```
 
 Then:
 
@@ -66,3 +76,6 @@ curl -I https://lijunqi.cc/pet-agent-java/
 
 The `/pet-agent-java/` location does not replace or modify the existing
 Django location.
+
+For HTTPS, also open port `443` in the Alibaba Cloud security group and keep
+the existing certificate configuration for `lijunqi.cc`.
