@@ -230,7 +230,7 @@
             <a th:href="@{/products/{id}/(id=${p.id})}" class="products-shell-visual"
                aria-label="查看 [[${p.name}]]">
                 <th:block th:if="${p.imageUrl}">
-                <img th:src="${p.imageUrl}" th:alt="${p.name}" loading="lazy">
+                <img th:src="@{${p.imageUrl}}" th:alt="${p.name}" loading="lazy">
                 </th:block><th:block th:unless="${p.imageUrl}">
                 [[${p.category.icon}]]
                 </th:block>

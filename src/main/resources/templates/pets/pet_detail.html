@@ -336,7 +336,7 @@
             <div class="pet-profile-top">
                 <div class="pet-profile-avatar">
                     <th:block th:if="${pet.avatarUrl}">
-                        <img th:src="${pet.avatarUrl}" th:alt="${pet.name}">
+                        <img th:src="@{${pet.avatarUrl}}" th:alt="${pet.name}">
                     </th:block><th:block th:unless="${pet.avatarUrl}">
                         <span class="pet-profile-emoji">
                             <th:block th:if="${pet.species == 'dog'}">🐶</th:block><th:block th:if="${pet.species == 'cat' and !((pet.species == 'dog'))}">🐱</th:block><th:block th:if="${pet.species == 'rabbit' and !((pet.species == 'dog') or (pet.species == 'cat'))}">🐰</th:block><th:block th:if="${pet.species == 'bird' and !((pet.species == 'dog') or (pet.species == 'cat') or (pet.species == 'rabbit'))}">🐦</th:block><th:block th:if="${pet.species == 'hamster' and !((pet.species == 'dog') or (pet.species == 'cat') or (pet.species == 'rabbit') or (pet.species == 'bird'))}">🐹</th:block><th:block th:if="${pet.species == 'turtle' and !((pet.species == 'dog') or (pet.species == 'cat') or (pet.species == 'rabbit') or (pet.species == 'bird') or (pet.species == 'hamster'))}">🐢</th:block><th:block th:if="${pet.species == 'fish' and !((pet.species == 'dog') or (pet.species == 'cat') or (pet.species == 'rabbit') or (pet.species == 'bird') or (pet.species == 'hamster') or (pet.species == 'turtle'))}">🐟</th:block><th:block th:if="${!((pet.species == 'dog') or (pet.species == 'cat') or (pet.species == 'rabbit') or (pet.species == 'bird') or (pet.species == 'hamster') or (pet.species == 'turtle') or (pet.species == 'fish'))}">🐾</th:block>

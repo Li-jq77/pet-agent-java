@@ -1,0 +1,19 @@
+[Unit]
+Description=Pet Agent Java Spring Boot Service
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/pet-agent-java
+EnvironmentFile=/opt/pet-agent-java/.env
+Environment=APP_PORT=8001
+Environment=APP_CONTEXT_PATH=/pet-agent-java
+ExecStart=/usr/bin/java -Xms256m -Xmx512m -jar /opt/pet-agent-java/pet-agent-java-1.0.0.jar
+Restart=always
+RestartSec=5
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

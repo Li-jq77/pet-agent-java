@@ -19,7 +19,7 @@
         <div class="detail-header">
             <div class="product-detail-visual" style="width:260px;height:260px;border-radius:16px;background:linear-gradient(145deg,var(--cream),#fff);display:flex;align-items:center;justify-content:center;font-size:6rem;flex-shrink:0;overflow:hidden;">
                 <th:block th:if="${product.imageUrl}">
-                <img th:src="${product.imageUrl}" th:alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">
+                <img th:src="@{${product.imageUrl}}" th:alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">
                 </th:block><th:block th:unless="${product.imageUrl}">
                 [[${product.category.icon}]]
                 </th:block>
@@ -57,7 +57,7 @@
         <a th:href="@{/products/{id}/(id=${related.id})}" style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px var(--shadow);text-decoration:none;color:inherit;transition:all 0.25s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px var(--shadow-lg)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 12px var(--shadow)'">
             <div style="height:130px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:3.5rem;overflow:hidden;">
                 <th:block th:if="${related.imageUrl}">
-                <img th:src="${related.imageUrl}" th:alt="${related.name}" style="width:100%;height:100%;object-fit:cover;">
+                <img th:src="@{${related.imageUrl}}" th:alt="${related.name}" style="width:100%;height:100%;object-fit:cover;">
                 </th:block><th:block th:unless="${related.imageUrl}">
                 [[${related.category.icon}]]
                 </th:block>

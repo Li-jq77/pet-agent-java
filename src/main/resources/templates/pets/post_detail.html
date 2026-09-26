@@ -172,7 +172,7 @@
         <h1>[[${post.title}]]</h1>
         <p class="post-detail-content">[[${post.content}]]</p>
         <th:block th:if="${post.imageUrl}">
-        <img class="post-detail-image" th:src="${post.imageUrl}" th:alt="${post.title}">
+        <img class="post-detail-image" th:src="@{${post.imageUrl}}" th:alt="${post.title}">
         </th:block>
     </article>
 

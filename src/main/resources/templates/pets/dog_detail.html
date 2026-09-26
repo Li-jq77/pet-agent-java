@@ -17,7 +17,7 @@
 
     <div class="detail-card">
         <div class="detail-header">
-            <img class="detail-img" th:src="${(dog.imageUrl ?: 'https://placedog.net/500/400')}" th:alt="${dog.name}">
+            <img class="detail-img" th:src="@{${dog.imageUrl ?: 'https://placedog.net/500/400'}}" th:alt="${dog.name}">
             <div class="detail-title">
                 <h1>[[${dog.name}]]</h1>
                 <div class="subtitle">[[${dog.category.icon}]] [[${dog.category.name}]]</div>
@@ -79,7 +79,7 @@
         <a th:href="@{/dog/{id}(id=${related.id})}" class="dog-card" style="text-decoration:none;color:inherit;">
             <div class="dog-img-wrapper">
                 <span class="popular-badge" th:if="${related.popular}">🔥 热门</span>
-                <img class="dog-img" th:src="${(related.imageUrl ?: 'https://placedog.net/400/300')}" th:alt="${related.name}" loading="lazy">
+                <img class="dog-img" th:src="@{${related.imageUrl ?: 'https://placedog.net/400/300'}}" th:alt="${related.name}" loading="lazy">
             </div>
             <div class="dog-info">
                 <div class="dog-name">[[${related.name}]]</div>

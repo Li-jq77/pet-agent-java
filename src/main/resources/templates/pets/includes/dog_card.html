@@ -2,7 +2,7 @@
     <a th:href="@{/dog/{id}(id=${dog.id})}" class="dog-card-link">
         <div class="dog-img-wrapper">
             <span class="popular-badge" th:if="${dog.popular}">🔥 热门</span>
-            <img class="dog-img" th:src="${dog.imageUrl}" th:alt="${dog.name}" loading="lazy">
+            <img class="dog-img" th:src="@{${dog.imageUrl}}" th:alt="${dog.name}" loading="lazy">
         </div>
         <div class="dog-info">
             <div class="dog-name" th:text="${dog.name}"></div>

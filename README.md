@@ -34,7 +34,22 @@ also reads `../ljq-pet-main/.env` when running beside the original project.
 mvn spring-boot:run
 ```
 
-Open `http://127.0.0.1:8000/`.
+Open `http://127.0.0.1:8000/pet-agent-java/`.
 
 Existing Django users remain valid because the application verifies Django
 `pbkdf2_sha256` password hashes directly.
+
+## Subdirectory deployment
+
+The default context path is `/pet-agent-java`, so the Java site can coexist
+with the Django site:
+
+```text
+https://lijunqi.cc/                 Django
+https://lijunqi.cc/pet-agent-java/  Spring Boot
+```
+
+Spring Boot is a Java process and cannot be started by Gunicorn. Run it as a
+separate systemd service and proxy `/pet-agent-java/` to it from Nginx. See
+`deploy/README.md`, `deploy/pet-agent-java.service`, and
+`deploy/nginx-pet-agent-java.conf`.
