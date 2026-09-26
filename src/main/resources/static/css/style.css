@@ -1496,3 +1496,420 @@ body {
         font-size: 1.1rem;
     }
 }
+
+/* ====== Cross-page responsive behavior ====== */
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+img,
+video,
+canvas {
+    max-width: 100%;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 10px;
+    border: 1px solid #f0dce4;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--brown);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar.is-menu-open .nav-toggle span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.navbar.is-menu-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar.is-menu-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+.dodou-fab.is-open,
+.dodou-widget.is-open .dodou-fab {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.82), 0 12px 30px rgba(185, 94, 137, 0.4);
+}
+
+@media (max-width: 980px) {
+    .navbar {
+        position: sticky;
+        min-height: 68px;
+        height: auto;
+        padding: 0 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.1rem;
+        max-width: calc(100% - 64px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .nav-toggle {
+        display: flex;
+        flex-shrink: 0;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        max-height: calc(100vh - 68px);
+        padding: 0.6rem 1rem 1rem;
+        overflow-y: auto;
+        background: rgba(255, 255, 255, 0.98);
+        border-top: 1px solid #f3e7eb;
+        box-shadow: 0 16px 28px rgba(93, 64, 55, 0.14);
+        backdrop-filter: blur(12px);
+    }
+
+    .nav-menu.is-open {
+        display: flex;
+    }
+
+    .nav-links {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .nav-links > li {
+        width: 100%;
+        border-bottom: 1px solid #f7eef1;
+    }
+
+    .nav-links > li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a,
+    .nav-links .dropbtn {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 46px;
+        padding: 0.72rem 0.65rem;
+        border-radius: 10px;
+        font-size: 0.92rem;
+    }
+
+    .dropdown {
+        display: block;
+        width: 100%;
+    }
+
+    .dropdown-content {
+        position: static;
+        display: none;
+        min-width: 0 !important;
+        margin: 0 0 0.45rem;
+        padding: 0.3rem;
+        border-radius: 10px;
+        box-shadow: none;
+        background: var(--cream);
+    }
+
+    .dropdown.is-open > .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: none;
+    }
+
+    .dropdown.is-open:hover > .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: 0.58rem 0.7rem !important;
+        white-space: normal;
+    }
+
+    .nav-auth {
+        width: 100%;
+        flex-wrap: wrap;
+        margin: 0.75rem 0 0;
+        padding: 0.75rem 0 0;
+        border-left: none;
+        border-top: 1px solid #f0e2e7;
+    }
+
+    .btn-auth,
+    .btn-username {
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+@media (max-width: 900px) {
+    .checkout-page,
+    .orders-page,
+    .order-page,
+    .pet-form-page,
+    .profile-page {
+        padding: 1.25rem !important;
+    }
+
+    .profile-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .profile-main-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .product-related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .categories-section,
+    .dog-section {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        padding: 1.25rem !important;
+    }
+
+    .profile-header > div:first-child {
+        width: 68px !important;
+        height: 68px !important;
+        font-size: 2rem !important;
+    }
+
+    .profile-header h1 {
+        font-size: 1.35rem !important;
+        overflow-wrap: anywhere;
+    }
+
+    .profile-header > div:last-child {
+        width: 100%;
+    }
+
+    .profile-header [style*="display:flex"] {
+        flex-wrap: wrap;
+    }
+
+    .product-detail-page .detail-header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1.25rem;
+    }
+
+    .product-detail-page .product-detail-visual {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1;
+        max-height: 360px;
+    }
+
+    .product-detail-page .detail-title {
+        text-align: left;
+    }
+
+    .product-detail-page .detail-body {
+        padding: 1.25rem;
+    }
+
+    .detail-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .order-head,
+    .order-list-main {
+        align-items: flex-start !important;
+        flex-direction: column;
+        gap: 0.55rem;
+    }
+
+    .order-list-main > div:last-child {
+        width: 100%;
+        text-align: left !important;
+    }
+
+    .order-actions {
+        flex-direction: column;
+    }
+
+    .order-actions > * {
+        width: 100%;
+        flex: none !important;
+    }
+
+    .order-item,
+    .checkout-item {
+        gap: 0.75rem;
+    }
+
+    .order-item > *,
+    .checkout-item > * {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .auth-section {
+        padding: 1rem;
+    }
+
+    .auth-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.7rem !important;
+    }
+
+    .category-card {
+        padding: 1.1rem 0.75rem;
+    }
+
+    .category-card .cat-icon {
+        font-size: 2rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .category-card h3 {
+        font-size: 1rem;
+    }
+
+    .dog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.65rem !important;
+    }
+
+    .dog-info {
+        padding: 0.7rem !important;
+    }
+
+    .dog-name {
+        font-size: 0.9rem !important;
+    }
+
+    .dog-tags {
+        display: none;
+    }
+
+    .dog-card-actions {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0.45rem;
+        padding: 0.55rem 0.65rem 0.7rem;
+    }
+
+    .dog-price {
+        font-size: 0.88rem !important;
+    }
+
+    .dog-add-btn {
+        justify-content: center;
+        width: 100%;
+        min-height: 34px;
+        padding: 0.35rem 0.5rem !important;
+        font-size: 0.78rem !important;
+    }
+
+    .profile-stats {
+        grid-template-columns: 1fr !important;
+    }
+
+    .stat-card {
+        min-width: 0;
+    }
+
+    .quick-action-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .product-related-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .detail-meta {
+        grid-template-columns: 1fr !important;
+    }
+
+    .checkout-page,
+    .orders-page,
+    .order-page,
+    .pet-form-page,
+    .profile-page,
+    .calendar-page,
+    .pet-detail-page {
+        padding: 0.85rem !important;
+    }
+
+    .footer {
+        padding: 1.1rem 0.8rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 430px) {
+    .navbar-brand {
+        font-size: 0.98rem;
+    }
+
+    .dog-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .nav-auth .btn-auth {
+        flex: 1 1 calc(50% - 0.4rem);
+        justify-content: center;
+    }
+
+    .dodou-fab {
+        max-width: calc(100vw - 24px);
+    }
+}

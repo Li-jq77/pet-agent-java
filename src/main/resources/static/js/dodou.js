@@ -4,7 +4,6 @@
 
     var panel = document.getElementById("dodouPanel");
     var fab = document.getElementById("dodouFab");
-    var fabAvatar = fab.querySelector("img");
     var messagesEl = document.getElementById("dodouMessages");
     var form = document.getElementById("dodouForm");
     var input = document.getElementById("dodouInput");
@@ -79,15 +78,6 @@
 
     function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
-    }
-
-    function isFabAvatarPointer(event) {
-        if (!fabAvatar) return false;
-        var rect = fabAvatar.getBoundingClientRect();
-        return event.clientX >= rect.left &&
-            event.clientX <= rect.right &&
-            event.clientY >= rect.top &&
-            event.clientY <= rect.bottom;
     }
 
     function loadFabPosition() {
@@ -203,11 +193,14 @@
         root.classList.toggle("is-open", shouldOpen);
         panel.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
         fab.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+        fab.setAttribute("aria-label", shouldOpen ? "关闭智能体豆豆" : "打开智能体豆豆");
         if (shouldOpen) {
             scrollToBottom();
             window.setTimeout(function () {
                 input.focus();
             }, 120);
+        } else {
+            input.blur();
         }
     }
 
@@ -457,10 +450,9 @@
     panel.addEventListener("pointerup", endPanelDrag);
     panel.addEventListener("pointercancel", endPanelDrag);
 
-    fab.addEventListener("click", function (event) {
-        if (moved || isFabAvatarPointer(event)) return;
-        if (isPanelOpen()) return;
-        togglePanel(true);
+    fab.addEventListener("click", function () {
+        if (moved) return;
+        togglePanel();
     });
 
     minimizeBtn.addEventListener("click", function () {
