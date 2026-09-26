@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{pets/base}">
+<head>
+    <title>🛒 购物车 - 里脊球的宠物店</title>
+    <th:block layout:fragment="extraCss">
+<style>
+.cart-shell {
+    width: min(1320px, calc(100% - 3rem));
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+.cart-shell-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cart-shell-head h1 {
+    margin: 0;
+    color: var(--brown);
+    font-size: 1.55rem;
+}
+
+.cart-shell-head p {
+    margin: 0.25rem 0 0;
+    color: var(--text-light);
+    font-size: 0.88rem;
+}
+
+.cart-shell-continue,
+.cart-shell-checkout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.58rem 1.15rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.cart-shell-continue {
+    background: white;
+    color: var(--text);
+    border: 1.5px solid #eee;
+}
+
+.cart-shell-checkout {
+    background: linear-gradient(135deg, var(--pink), var(--coral));
+    color: white;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.cart-shell-list {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.cart-shell-row {
+    display: grid;
+    grid-template-columns: 120px minmax(220px, 1fr) 130px 130px;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px var(--shadow);
+}
+
+.cart-shell-thumb {
+    width: 120px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--cream);
+    font-size: 2.8rem;
+}
+
+.cart-shell-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.cart-shell-info {
+    min-width: 0;
+}
+
+.cart-shell-info h2 {
+    margin: 0 0 0.3rem;
+    color: var(--brown);
+    font-size: 1.05rem;
+}
+
+.cart-shell-info p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.84rem;
+}
+
+.cart-shell-type {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    padding: 0.14rem 0.5rem;
+    border-radius: 50px;
+    background: var(--pink-light);
+    color: var(--pink);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.cart-shell-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cart-shell-qty-btn {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.cart-shell-qty-dec {
+    color: var(--text);
+    background: var(--cream);
+}
+
+.cart-shell-qty-inc {
+    color: var(--pink);
+    background: var(--pink-light);
+}
+
+.cart-shell-qty-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.cart-shell-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+}
+
+.cart-shell-line-total {
+    color: var(--coral);
+    font-size: 1.16rem;
+    font-weight: 700;
+}
+
+.cart-shell-remove {
+    color: var(--text-light);
+    font-size: 0.76rem;
+    text-decoration: none;
+}
+
+.cart-shell-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.3rem 1.5rem;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px var(--shadow);
+}
+
+.cart-shell-total {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    color: var(--text-light);
+}
+
+.cart-shell-total strong {
+    color: var(--coral);
+    font-size: 1.9rem;
+}
+
+.cart-shell-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.cart-shell-empty {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 2px 12px var(--shadow);
+}
+
+.cart-shell-empty span {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: 4rem;
+}
+
+.cart-shell-empty h2 {
+    margin: 0 0 0.4rem;
+    color: var(--brown);
+}
+
+.cart-shell-empty p {
+    margin: 0 0 1.2rem;
+    color: var(--text-light);
+}
+
+@media (max-width: 900px) {
+    .cart-shell {
+        width: calc(100% - 2rem);
+        padding: 1.4rem 0 3rem;
+    }
+
+    .cart-shell-row {
+        grid-template-columns: 96px minmax(0, 1fr);
+        align-items: start;
+        gap: 0.8rem 1rem;
+    }
+
+    .cart-shell-thumb {
+        width: 96px;
+        height: 84px;
+    }
+
+    .cart-shell-quantity {
+        grid-column: 2;
+        justify-content: flex-start;
+    }
+
+    .cart-shell-side {
+        grid-column: 2;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 560px) {
+    .cart-shell {
+        width: calc(100% - 1.2rem);
+        padding-top: 1rem;
+    }
+
+    .cart-shell-head,
+    .cart-shell-summary {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cart-shell-row {
+        grid-template-columns: 78px minmax(0, 1fr);
+        padding: 0.8rem;
+    }
+
+    .cart-shell-thumb {
+        width: 78px;
+        height: 72px;
+        font-size: 2rem;
+    }
+
+    .cart-shell-actions {
+        justify-content: space-between;
+    }
+
+    .cart-shell-checkout {
+        flex: 1;
+    }
+}
+</style>
+    </th:block>
+</head>
+<body>
+    <th:block layout:fragment="content">
+<main class="cart-shell">
+    <header class="cart-shell-head">
+        <div>
+            <h1>🛒 购物车</h1>
+            <p>看看你都给毛孩子挑了些什么吧 🐾</p>
+        </div>
+        <a th:href="@{/products/}" class="cart-shell-continue">🛍️ 继续选购</a>
+    </header>
+
+    <th:block th:if="${cartItems}">
+    <section class="cart-shell-list">
+        <th:block th:each="item : ${cartItems}">
+        <article class="cart-shell-row">
+            <div class="cart-shell-thumb">
+                <th:block th:if="${item.imageUrl}">
+                <img th:src="${item.imageUrl}" th:alt="${item.displayName}" loading="lazy">
+                </th:block><th:block th:unless="${item.imageUrl}">
+                <span>[[${item.categoryIcon}]]</span>
+                </th:block>
+            </div>
+
+            <div class="cart-shell-info">
+                <span class="cart-shell-type">[[${item.itemType}]]</span>
+                <h2>[[${item.displayName}]]</h2>
+                <p>单价 ¥[[${#numbers.formatDecimal(item.unitPrice,1,2)}]]</p>
+            </div>
+
+            <div class="cart-shell-quantity">
+                <a th:href="@{/cart/quantity/{itemId}/dec/(itemId=${item.id})}"
+                   class="cart-shell-qty-btn cart-shell-qty-dec"
+                   aria-label="减少数量">−</a>
+                <span class="cart-shell-qty-value">×[[${item.quantity}]]</span>
+                <a th:href="@{/cart/quantity/{itemId}/inc/(itemId=${item.id})}"
+                   class="cart-shell-qty-btn cart-shell-qty-inc"
+                   aria-label="增加数量">+</a>
+            </div>
+
+            <div class="cart-shell-side">
+                <span class="cart-shell-line-total">¥[[${#numbers.formatDecimal(item.lineTotal,1,2)}]]</span>
+                <a th:href="@{/cart/remove/{itemId}/(itemId=${item.id})}"
+                   class="cart-shell-remove"
+                   onclick="return confirm('确定要移除此商品吗？')">🗑️ 移除</a>
+            </div>
+        </article>
+        </th:block>
+    </section>
+
+    <section class="cart-shell-summary">
+        <div class="cart-shell-total">
+            <span>合计</span>
+            <strong>¥[[${#numbers.formatDecimal(total,1,2)}]]</strong>
+        </div>
+        <div class="cart-shell-actions">
+            <a th:href="@{/products/}" class="cart-shell-continue">继续选购</a>
+            <a th:href="@{/checkout/}" class="cart-shell-checkout">💳 去结算</a>
+        </div>
+    </section>
+    </th:block><th:block th:if="${#lists.isEmpty(cartItems)}">
+    <section class="cart-shell-empty">
+        <span>🛒</span>
+        <h2>购物车是空的</h2>
+        <p>快给毛孩子选些爱心礼物吧 💕</p>
+        <a th:href="@{/products/}" class="cart-shell-checkout">🛍️ 去商店逛逛</a>
+    </section>
+    </th:block>
+</main>
+    </th:block>
+    <th:block layout:fragment="extraJs">
+
+    </th:block>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{pets/base}">
+<head>
+    <title>[[${category.icon}]] [[${category.name}]] - 里脊球的宠物店</title>
+    <th:block layout:fragment="extraCss">
+
+    </th:block>
+</head>
+<body>
+    <th:block layout:fragment="content">
+<section class="page-header">
+    <h1>[[${category.icon}]] [[${category.name}]]</h1>
+    <p>[[${(category.description ?: '来看看这些可爱的毛孩子吧 💕')}]]</p>
+</section>
+
+<div class="dog-section">
+    <a th:href="@{/}" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.5rem 1.2rem;background:white;color:var(--text-light);border-radius:50px;text-decoration:none;box-shadow:0 2px 10px var(--shadow);margin-bottom:1.5rem;font-size:0.85rem;font-weight:500;">← 返回首页</a>
+</div>
+
+<section class="dog-section">
+    <th:block th:if="${dogs}">
+    <div class="dog-grid">
+        <th:block th:each="dog : ${dogs}">
+        <div th:replace="pets/includes/dog_card :: card"></div>
+        </th:block>
+    </div>
+
+    <th:block th:if="${dogPage.totalPages > 1}">
+    <div class="pagination">
+        <th:block th:if="${dogPage.hasPrevious}">
+        <a href="?page=1">&laquo;</a>
+        <a href="?page=[[${dogPage.number}]]">‹</a>
+        </th:block>
+        <span class="current">[[${dogPage.number + 1}]] / [[${dogPage.totalPages}]]</span>
+        <th:block th:if="${dogPage.hasNext}">
+        <a href="?page=[[${dogPage.number + 2}]]">›</a>
+        <a href="?page=[[${dogPage.totalPages}]]">&raquo;</a>
+        </th:block>
+    </div>
+    </th:block>
+
+    </th:block><th:block th:if="${#lists.isEmpty(dogs)}">
+    <p style="text-align:center; color:var(--text-light); padding: 3rem 0;">
+        这个分类还没有狗狗哦 🐾
+    </p>
+    </th:block>
+</section>
+    </th:block>
+    <th:block layout:fragment="extraJs">
+
+    </th:block>
+</body>
+</html>

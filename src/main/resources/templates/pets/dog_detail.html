@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{pets/base}">
+<head>
+    <title>[[${dog.name}]] - 里脊球的宠物店</title>
+    <th:block layout:fragment="extraCss">
+
+    </th:block>
+</head>
+<body>
+    <th:block layout:fragment="content">
+<section class="detail-section">
+    <a th:href="@{/}" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.5rem 1.2rem;background:white;color:var(--text-light);border-radius:50px;text-decoration:none;box-shadow:0 2px 10px var(--shadow);margin-bottom:1.5rem;font-size:0.85rem;font-weight:500;">← 返回首页</a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <img class="detail-img" th:src="${(dog.imageUrl ?: 'https://placedog.net/500/400')}" th:alt="${dog.name}">
+            <div class="detail-title">
+                <h1>[[${dog.name}]]</h1>
+                <div class="subtitle">[[${dog.category.icon}]] [[${dog.category.name}]]</div>
+                <div class="detail-price">¥[[${dog.price}]] <small>起</small></div>
+                <a th:href="@{/cart/add-dog/{dogId}/(dogId=${dog.id})}" style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.6rem 1.3rem;background:linear-gradient(135deg,var(--pink),var(--coral));color:white;border-radius:50px;text-decoration:none;font-weight:600;font-size:0.9rem;box-shadow:0 4px 12px var(--shadow);margin-bottom:1rem;">🛒 加入购物车</a>
+
+                <div class="detail-meta">
+                    <th:block th:if="${dog.origin}">
+                    <div class="meta-item">
+                        <span class="label">🌍 原产地</span>
+                        <span class="value">[[${dog.origin}]]</span>
+                    </div>
+                    </th:block>
+                    <th:block th:if="${dog.weight}">
+                    <div class="meta-item">
+                        <span class="label">⚖️ 体重</span>
+                        <span class="value">[[${dog.weight}]]</span>
+                    </div>
+                    </th:block>
+                    <th:block th:if="${dog.height}">
+                    <div class="meta-item">
+                        <span class="label">📏 肩高</span>
+                        <span class="value">[[${dog.height}]]</span>
+                    </div>
+                    </th:block>
+                    <th:block th:if="${dog.lifespan}">
+                    <div class="meta-item">
+                        <span class="label">⏳ 寿命</span>
+                        <span class="value">[[${dog.lifespan}]]</span>
+                    </div>
+                    </th:block>
+                    <th:block th:if="${dog.color}">
+                    <div class="meta-item">
+                        <span class="label">🎨 毛色</span>
+                        <span class="value">[[${dog.color}]]</span>
+                    </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-body">
+            <h2>📖 品种介绍</h2>
+            <p>[[${dog.description}]]</p>
+
+            <th:block th:if="${dog.temperament}">
+            <h2>💕 性格特点</h2>
+            <p>[[${dog.temperament}]]</p>
+            </th:block>
+        </div>
+    </div>
+</section>
+
+<th:block th:if="${relatedDogs}">
+<section class="dog-section">
+    <h2 class="section-title">同分类推荐</h2>
+    <div class="dog-grid">
+        <th:block th:each="related : ${relatedDogs}">
+        <a th:href="@{/dog/{id}(id=${related.id})}" class="dog-card" style="text-decoration:none;color:inherit;">
+            <div class="dog-img-wrapper">
+                <span class="popular-badge" th:if="${related.popular}">🔥 热门</span>
+                <img class="dog-img" th:src="${(related.imageUrl ?: 'https://placedog.net/400/300')}" th:alt="${related.name}" loading="lazy">
+            </div>
+            <div class="dog-info">
+                <div class="dog-name">[[${related.name}]]</div>
+                <div class="dog-category">[[${related.category.icon}]] [[${related.category.name}]]</div>
+                <div class="dog-price">¥[[${related.price}]] <small>起</small></div>
+            </div>
+        </a>
+        </th:block>
+    </div>
+</section>
+</th:block>
+    </th:block>
+    <th:block layout:fragment="extraJs">
+
+    </th:block>
+</body>
+</html>

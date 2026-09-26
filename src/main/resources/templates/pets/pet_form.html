@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{pets/base}">
+<head>
+    <title>[[${formTitle}]] - 里脊球的宠物店</title>
+    <th:block layout:fragment="extraCss"></th:block>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div style="padding:2rem;max-width: 800px;margin:0 auto;">
+        <div style="background:white;border-radius:24px;padding:2rem;box-shadow:0 4px 25px var(--shadow);">
+            <h2 style="text-align:center;font-size:1.3rem;color:var(--brown);margin-bottom:0.3rem;">[[${formTitle}]]</h2>
+            <p style="text-align:center;color:var(--text-light);font-size:0.85rem;margin-bottom:1.5rem;">[[${formSubtitle}]]</p>
+
+            <form method="post">
+                <div style="margin-bottom:1rem;">
+                    <label for="name" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">宠物昵称</label>
+                    <input type="text" id="name" name="name" th:value="${pet.name}" required style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="species" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">物种</label>
+                    <select id="species" name="species" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                        <option value="dog" th:selected="${pet.species == 'dog'}">🐶 狗狗</option>
+                        <option value="cat" th:selected="${pet.species == 'cat'}">🐱 猫咪</option>
+                        <option value="rabbit" th:selected="${pet.species == 'rabbit'}">🐰 兔子</option>
+                        <option value="bird" th:selected="${pet.species == 'bird'}">🐦 小鸟</option>
+                        <option value="fish" th:selected="${pet.species == 'fish'}">🐟 鱼类</option>
+                        <option value="hamster" th:selected="${pet.species == 'hamster'}">🐹 仓鼠</option>
+                        <option value="turtle" th:selected="${pet.species == 'turtle'}">🐢 乌龟</option>
+                        <option value="other" th:selected="${pet.species == 'other'}">其他</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="breed" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">品种</label>
+                    <input type="text" id="breed" name="breed" th:value="${pet.breed}" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="gender" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">性别</label>
+                    <select id="gender" name="gender" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                        <option value="male" th:selected="${pet.gender == 'male'}">♂️ 男生</option>
+                        <option value="female" th:selected="${pet.gender == 'female'}">♀️ 女生</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="birthday" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">出生日期</label>
+                    <input type="date" id="birthday" name="birthday" th:value="${pet.birthday}" placeholder="选填" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="adopted_date" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">领养/接回家日期</label>
+                    <input type="date" id="adopted_date" name="adopted_date" th:value="${pet.adoptedDate}" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="avatar_url" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">头像链接</label>
+                    <input type="url" id="avatar_url" name="avatar_url" th:value="${pet.avatarUrl}" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="color" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">毛色/特征</label>
+                    <input type="text" id="color" name="color" th:value="${pet.color}" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                </div>
+                <div style="margin-bottom:1rem;" th:if="${isEdit}">
+                    <label for="microchip_id" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">芯片编号</label>
+                    <input type="text" id="microchip_id" name="microchip_id" th:value="${pet.microchipId}" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);">
+                </div>
+                <div style="margin-bottom:1rem;">
+                    <label for="notes" style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">备注</label>
+                    <textarea id="notes" name="notes" rows="3" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #eee;border-radius:12px;font-size:0.9rem;outline:none;background:var(--cream);resize:vertical;" th:text="${pet.notes}"></textarea>
+                </div>
+                <div style="margin-bottom:1rem;" th:if="${isEdit}">
+                    <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">
+                        <input type="checkbox" name="is_active" value="true" th:checked="${pet.active}"> 是否在养
+                    </label>
+                </div>
+
+                <button type="submit" style="width:100%;padding:0.7rem;background:linear-gradient(135deg,var(--pink),var(--coral));color:white;border:none;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:0.5rem;">[[${submitText}]]</button>
+            </form>
+
+            <div style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-light);">
+                <a th:href="@{/profile/}" style="color:var(--pink);text-decoration:none;font-weight:600;">← 返回个人中心</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block layout:fragment="extraJs"></th:block>
+</body>
+</html>

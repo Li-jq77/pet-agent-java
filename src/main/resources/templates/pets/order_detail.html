@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{pets/base}">
+<head>
+    <title>订单详情 - 里脊球的宠物店</title>
+    <th:block layout:fragment="extraCss">
+
+    </th:block>
+</head>
+<body>
+    <th:block layout:fragment="content">
+<div style="padding:2rem;max-width:700px;margin:0 auto;">
+    <a th:href="@{/orders/}" style="display:inline-flex;align-items:center;gap:0.3rem;text-decoration:none;color:var(--text-light);margin-bottom:1rem;font-size:0.9rem;">← 返回订单列表</a>
+
+    <div style="background:white;border-radius:16px;padding:1.5rem;box-shadow:0 2px 12px var(--shadow);margin-bottom:1rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <h2 style="font-size:1.2rem;color:var(--brown);">📋 订单 #[[${order.id}]]</h2>
+            <span style="padding:0.3rem 0.8rem;border-radius:50px;font-size:0.85rem;font-weight:600;"
+                  th:styleappend="${order.status == 'paid' ? 'background:var(--mint-light);color:#2d6a4f;' : (order.status == 'cancelled' ? 'background:#FFE8EC;color:var(--coral);' : (order.status == 'completed' ? 'background:#E8F0FF;color:#1565C0;' : 'background:var(--cream);color:var(--text-light);'))}">
+                [[${order.statusDisplay}]]
+            </span>
+        </div>
+
+        <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #f5f5f5;">
+            <div style="font-size:0.85rem;color:var(--text-light);margin-bottom:0.2rem;">下单时间：[[${#temporals.format(order.createdAt,'yyyy-MM-dd HH:mm:ss')}]]</div>
+            <div style="font-size:0.85rem;color:var(--text-light);">联系电话：[[${order.phone}]]</div>
+            <div style="font-size:0.85rem;color:var(--text-light);">收货地址：[[${order.address}]]</div>
+        </div>
+
+        <h3 style="font-size:1rem;color:var(--brown);margin-bottom:0.8rem;">商品清单</h3>
+        <th:block th:each="item : ${orderItems}">
+        <div style="display:flex;justify-content:space-between;padding:0.5rem 0;font-size:0.9rem;border-bottom:1px solid #f5f5f5;">
+            <span><th:block th:if="${item.dog}">[[${item.dog.name}]]</th:block><th:block th:unless="${item.dog}">[[${item.product.name}]]</th:block> × [[${item.quantity}]]</span>
+            <span style="font-weight:600;">¥[[${item.price}]] × [[${item.quantity}]]</span>
+        </div>
+        </th:block>
+        <div style="display:flex;justify-content:space-between;padding-top:0.8rem;font-size:1.1rem;">
+            <span style="font-weight:600;">合计</span>
+            <span style="font-weight:700;color:var(--coral);font-size:1.3rem;">¥[[${#numbers.formatDecimal(order.total,1,2)}]]</span>
+        </div>
+    </div>
+
+    <div style="display:flex;gap:0.8rem;">
+        <th:block th:if="${order.status == 'pending'}">
+        <a th:href="@{/orders/{id}/pay/(id=${order.id})}" style="flex:2;display:flex;align-items:center;justify-content:center;padding:0.7rem;background:linear-gradient(135deg,var(--pink),var(--coral));color:white;border-radius:12px;text-decoration:none;font-weight:600;">💳 模拟支付</a>
+        <a th:href="@{/orders/{id}/cancel/(id=${order.id})}" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0.7rem;background:white;color:var(--coral);border-radius:12px;text-decoration:none;font-weight:600;border:1.5px solid var(--coral);" onclick="return confirm('确定要取消此订单吗？')">取消订单</a>
+        </th:block><th:block th:if="${order.status == 'paid' and !((order.status == 'pending'))}">
+        <div style="flex:1;text-align:center;padding:0.7rem;background:var(--mint-light);color:#2d6a4f;border-radius:12px;font-weight:600;">✅ 已支付，等待发货</div>
+        </th:block><th:block th:if="${order.status == 'cancelled' and !((order.status == 'pending') or (order.status == 'paid'))}">
+        <div style="flex:1;text-align:center;padding:0.7rem;background:#FFE8EC;color:var(--coral);border-radius:12px;font-weight:600;">订单已取消</div>
+        </th:block>
+    </div>
+</div>
+    </th:block>
+    <th:block layout:fragment="extraJs">
+
+    </th:block>
+</body>
+</html>

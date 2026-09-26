@@ -1,0 +1,23 @@
+<div class="dog-card" th:fragment="card">
+    <a th:href="@{/dog/{id}(id=${dog.id})}" class="dog-card-link">
+        <div class="dog-img-wrapper">
+            <span class="popular-badge" th:if="${dog.popular}">🔥 热门</span>
+            <img class="dog-img" th:src="${dog.imageUrl}" th:alt="${dog.name}" loading="lazy">
+        </div>
+        <div class="dog-info">
+            <div class="dog-name" th:text="${dog.name}"></div>
+            <div class="dog-category">[[${dog.category.icon}]] [[${dog.category.name}]]</div>
+            <div class="dog-tags">
+                <span class="tag" th:if="${!#strings.isEmpty(dog.origin)}">🌍 [[${dog.origin}]]</span>
+                <span class="tag" th:if="${!#strings.isEmpty(dog.lifespan)}">⏳ [[${dog.lifespan}]]</span>
+                <span class="tag" th:if="${!#strings.isEmpty(dog.weight)}">⚖️ [[${dog.weight}]]</span>
+            </div>
+        </div>
+    </a>
+    <div class="dog-card-actions">
+        <span class="dog-price">¥[[${dog.price}]] <small>起</small></span>
+        <a th:href="@{/cart/add-dog/{id}(id=${dog.id})}" class="dog-add-btn">
+            🛒 加入购物车
+        </a>
+    </div>
+</div>

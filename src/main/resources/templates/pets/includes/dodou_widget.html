@@ -1,0 +1,57 @@
+<div id="dodouWidget" class="dodou-widget" th:fragment="widget"
+     th:attr="data-chat-url=@{/dodou/chat/},data-weather-url=@{/dodou/weather/}"
+     data-avatar-url="/static/images/dodou_dog.jpg">
+    <section class="dodou-panel" id="dodouPanel" aria-hidden="true" aria-label="智能体豆豆">
+        <header class="dodou-panel-head">
+            <div class="dodou-head-user">
+                <img class="dodou-avatar-img dodou-avatar-img-lg" th:src="@{/static/images/dodou_dog.jpg}" alt="" aria-hidden="true">
+                <div class="dodou-head-copy">
+                    <strong>智能体豆豆</strong>
+                    <span>宠物问诊 · 遛狗天气</span>
+                </div>
+            </div>
+            <div class="dodou-head-actions">
+                <button class="dodou-icon-btn" id="dodouMinimize" type="button" aria-label="收起智能体豆豆">－</button>
+                <button class="dodou-icon-btn" id="dodouClose" type="button" aria-label="关闭智能体豆豆">×</button>
+            </div>
+        </header>
+
+        <div class="dodou-messages" id="dodouMessages" role="log" aria-live="polite">
+            <div class="dodou-row dodou-row-bot">
+                <img class="dodou-avatar-img" th:src="@{/static/images/dodou_dog.jpg}" alt="" aria-hidden="true">
+                <div class="dodou-bubble dodou-welcome">
+                    <p>你好呀，豆豆在这里。宠物哪里不舒服，或者出门前想看看天气，都可以直接告诉豆豆。</p>
+                    <div class="dodou-welcome-actions">
+                        <button type="button" class="dodou-action" data-quick="我家狗狗这两天有点拉肚子，要怎么护理？">
+                            <span aria-hidden="true">🏥</span>
+                            <span>宠物问诊</span>
+                        </button>
+                        <button type="button" class="dodou-action dodou-action-weather" data-quick="现在适合遛狗吗？" data-locate="1">
+                            <span aria-hidden="true">☀️</span>
+                            <span>遛狗天气</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dodou-suggestions">
+            <button type="button" class="dodou-suggestion" data-quick="宠物问诊">宠物问诊</button>
+            <button type="button" class="dodou-suggestion dodou-suggestion-weather" data-quick="今天适合遛狗吗？" data-locate="1">遛狗天气</button>
+        </div>
+
+        <form class="dodou-composer" id="dodouForm">
+            <label class="dodou-sr-only" for="dodouInput">输入问题</label>
+            <input id="dodouInput" class="dodou-input" type="text" autocomplete="off"
+                   placeholder="问问宠物小状况，或输入城市查天气" maxlength="300">
+            <button class="dodou-send" type="submit" aria-label="发送">
+                <span aria-hidden="true">↑</span>
+            </button>
+        </form>
+    </section>
+
+    <button class="dodou-fab" id="dodouFab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="dodouPanel">
+        <img class="dodou-fab-avatar-img" th:src="@{/static/images/dodou_dog.jpg}" alt="" aria-hidden="true" draggable="false">
+        <span class="dodou-fab-label">智能体豆豆</span>
+    </button>
+</div>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE">🐾 里脊球的宠物店</title>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}">
+    <th:block layout:fragment="extraCss"></th:block>
+    <link rel="stylesheet" th:href="@{/static/css/dodou.css}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐾</text></svg>">
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}" class="navbar-brand">
+            <span class="paw">🐾</span>
+            里脊球的宠物店
+        </a>
+        <div style="display:flex;align-items:center;">
+            <ul class="nav-links">
+                <li>
+                    <a th:href="@{/}" th:classappend="${activeNav == 'index'} ? 'active' : ''">🏠 首页</a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">🐶 狗狗</a>
+                    <div class="dropdown-content">
+                        <a th:each="cat : ${dogCategories}"
+                           th:href="@{/category/{slug}(slug=${cat.slug})}">
+                            [[${cat.icon}]] [[${cat.name}]]
+                        </a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">😺 猫猫</a>
+                    <div class="dropdown-content">
+                        <a th:each="cat : ${catCategories}"
+                           th:href="@{/category/{slug}(slug=${cat.slug})}">
+                            [[${cat.icon}]] [[${cat.name}]]
+                        </a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">🛍️ 相关产品</a>
+                    <div class="dropdown-content" style="min-width:160px;">
+                        <a th:href="@{/products/}">📦 全部产品</a>
+                        <a th:href="@{/products/vaccine/}">💉 疫苗</a>
+                        <a th:href="@{/products/food/}">🍖 食品</a>
+                        <a th:href="@{/products/toy/}">🧸 玩具</a>
+                        <a th:href="@{/products/accessory/}">🎀 配件</a>
+                        <a th:href="@{/products/health/}">💊 保健品</a>
+                        <hr style="margin:0.3rem 0;border:none;border-top:1px solid #eee;">
+                        <a th:href="@{/orders/}">📦 我的订单</a>
+                    </div>
+                </li>
+
+                <li>
+                    <a th:href="@{/cart/}" th:classappend="${activeNav == 'cart'} ? 'active' : ''">
+                        🛒 购物车
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">📢 求助分享</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/posts/}">📋 所有帖子</a>
+                        <a th:href="@{/posts/new/}">✏️ 发布帖子</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="nav-auth">
+                <sec:authorize access="isAuthenticated()">
+                    <a th:href="@{/profile/}" class="btn-auth btn-login" style="margin-right:0.5rem;">👤 个人中心</a>
+                    <span class="btn-username">👋 <span th:text="${#authentication.name}">username</span></span>
+                    <a th:href="@{/logout/}" class="btn-auth btn-logout">退出</a>
+                </sec:authorize>
+                <sec:authorize access="!isAuthenticated()">
+                    <a th:href="@{/login/}" class="btn-auth btn-login">登录</a>
+                    <a th:href="@{/register/}" class="btn-auth btn-register">注册</a>
+                </sec:authorize>
+            </div>
+        </div>
+    </nav>
+
+    <th:block layout:fragment="content"></th:block>
+
+    <footer class="footer">
+        <p>🐾 里脊球的宠物店 &copy; 2026 | 用心守护每一只毛孩子 💕</p>
+    </footer>
+
+    <th:block layout:fragment="extraJs"></th:block>
+    <div th:replace="pets/includes/dodou_widget :: widget"></div>
+    <script th:src="@{/static/js/dodou.js}" defer></script>
+</body>
+</html>
