@@ -77,12 +77,12 @@
                 </li>
             </ul>
             <div class="nav-auth">
-                <sec:authorize access="isAuthenticated()">
+                <sec:authorize access="isFullyAuthenticated()">
                     <a th:href="@{/profile/}" class="btn-auth btn-login" style="margin-right:0.5rem;">👤 个人中心</a>
                     <span class="btn-username">👋 <span th:text="${#authentication.name}">username</span></span>
                     <a th:href="@{/logout/}" class="btn-auth btn-logout">退出</a>
                 </sec:authorize>
-                <sec:authorize access="!isAuthenticated()">
+                <sec:authorize access="!isFullyAuthenticated()">
                     <a th:href="@{/login/}" class="btn-auth btn-login">登录</a>
                     <a th:href="@{/register/}" class="btn-auth btn-register">注册</a>
                 </sec:authorize>

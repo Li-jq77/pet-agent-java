@@ -179,12 +179,12 @@
     <section class="post-detail-comments">
         <h2>💬 评论 ([[${#lists.size(comments)}]])</h2>
 
-        <th:block sec:authorize="isAuthenticated()">
+        <th:block sec:authorize="isFullyAuthenticated()">
         <form method="post" class="post-detail-comment-form">
             <textarea name="content" rows="3" placeholder="写下你的评论..." required></textarea>
             <button type="submit">发表评论</button>
         </form>
-        </th:block><th:block sec:authorize="!isAuthenticated()">
+        </th:block><th:block sec:authorize="!isFullyAuthenticated()">
         <p class="post-detail-empty">
             <a th:href="@{/login/} + '?next=' + ${#request.requestURI}" style="color:var(--pink);">登录</a>后可以评论
         </p>
