@@ -1,6 +1,7 @@
 package com.ljq.petagent.service;
 
 import com.ljq.petagent.entity.AppUser;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,9 @@ public class CurrentUserService {
     }
 
     public AppUser get(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
+        if (authentication == null
+            || !authentication.isAuthenticated()
+            || authentication instanceof AnonymousAuthenticationToken) {
             return null;
         }
         return appUserService.findByUsername(authentication.getName());
